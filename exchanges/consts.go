@@ -9,4 +9,5 @@ const (
 	HbdmSwap       = "hbdmswap"
 	OkexFutures    = "okexfutures"
 	OkexSwap       = "okexswap"
+	BinanceSpot	   = "binancespot"
 )

@@ -14,6 +14,7 @@ require (
 	github.com/frankrap/huobi-api v1.0.2
 	github.com/frankrap/okex-api v1.0.4
 	github.com/go-echarts/go-echarts v1.0.0
+	github.com/gorilla/websocket v1.4.2
 	github.com/json-iterator/go v1.1.10
 	github.com/micro/go-micro v1.18.0 // indirect
 	github.com/rakyll/statik v0.1.7

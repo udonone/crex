@@ -30,7 +30,7 @@ func TestWS_AllInOne(t *testing.T) {
 	})
 	ws.SubscribeTrades(Market{
 		Symbol: "BTC-USD-SWAP",
-	}, func(trades []Trade) {
+	}, func(trades []*Trade) {
 		log.Printf("%#v", trades)
 	})
 
@@ -42,7 +42,7 @@ func TestWS_SubscribeOrders(t *testing.T) {
 
 	ws.SubscribeOrders(Market{
 		Symbol: "BTC-USD-SWAP",
-	}, func(orders []Order) {
+	}, func(orders []*Order) {
 		log.Printf("%#v", orders)
 	})
 

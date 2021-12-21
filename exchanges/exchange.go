@@ -4,6 +4,7 @@ import (
 	"fmt"
 	. "github.com/coinrust/crex"
 	"github.com/coinrust/crex/exchanges/binancefutures"
+	"github.com/coinrust/crex/exchanges/binancespot"
 	"github.com/coinrust/crex/exchanges/bitmex"
 	"github.com/coinrust/crex/exchanges/bybit"
 	"github.com/coinrust/crex/exchanges/deribit"
@@ -41,6 +42,8 @@ func NewExchangeFromParameters(name string, params *Parameters) Exchange {
 		return okexfutures.NewOkexFutures(params)
 	case OkexSwap:
 		return okexswap.NewOkexSwap(params)
+	case BinanceSpot:
+		return binancespot.NewBinanceSpot(params)
 	default:
 		panic(fmt.Sprintf("new exchange error [%v]", name))
 	}

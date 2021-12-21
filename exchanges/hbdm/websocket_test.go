@@ -26,7 +26,7 @@ func TestHbdmWebSocket_AllInOne(t *testing.T) {
 	ws.SubscribeLevel2Snapshots("BTC", ContractTypeW1, func(ob *OrderBook) {
 		log.Printf("ob: %#v", ob)
 	})
-	ws.SubscribeTrades("BTC", ContractTypeW1, func(trades []Trade) {
+	ws.SubscribeTrades("BTC", ContractTypeW1, func(trades []*Trade) {
 		log.Printf("trades: %#v", trades)
 	})
 
@@ -36,7 +36,7 @@ func TestHbdmWebSocket_AllInOne(t *testing.T) {
 func TestHbdmWebSocket_SubscribeOrders(t *testing.T) {
 	ws := testWebSocket()
 
-	ws.SubscribeOrders("BTC", ContractTypeW1, func(orders []Order) {
+	ws.SubscribeOrders("BTC", ContractTypeW1, func(orders []*Order) {
 		log.Printf("orders: %#v", orders)
 	})
 

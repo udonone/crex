@@ -25,7 +25,7 @@ func TestNewWebSocket(t *testing.T) {
 	ws.SubscribeLevel2Snapshots(Market{Symbol: "BTCUSD"}, func(ob *OrderBook) {
 		log.Printf("%#v", ob)
 	})
-	ws.SubscribeTrades(Market{Symbol: "BTCUSD"}, func(trades []Trade) {
+	ws.SubscribeTrades(Market{Symbol: "BTCUSD"}, func(trades []*Trade) {
 		log.Printf("%#v", trades)
 	})
 
@@ -36,11 +36,11 @@ func TestBybitWebSocket_SubscribeOrders(t *testing.T) {
 	ws := testWebSocket()
 
 	market := Market{Symbol: "BTCUSD"}
-	ws.SubscribeOrders(market, func(orders []Order) {
+	ws.SubscribeOrders(market, func(orders []*Order) {
 		log.Printf("Orders: %#v", orders)
 	})
 
-	ws.SubscribePositions(market, func(positions []Position) {
+	ws.SubscribePositions(market, func(positions []*Position) {
 		log.Printf("Positions: %#v", positions)
 	})
 

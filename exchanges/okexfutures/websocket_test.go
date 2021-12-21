@@ -30,7 +30,7 @@ func TestFuturesWebSocket_AllInOne(t *testing.T) {
 	})
 	ws.SubscribeTrades(Market{
 		Symbol: "BTC-USD-200626",
-	}, func(trades []Trade) {
+	}, func(trades []*Trade) {
 		log.Printf("%#v", trades)
 	})
 
@@ -42,7 +42,7 @@ func TestFuturesWebSocket_SubscribeOrders(t *testing.T) {
 
 	ws.SubscribeOrders(Market{
 		Symbol: "BTC-USD-200626",
-	}, func(orders []Order) {
+	}, func(orders []*Order) {
 		log.Printf("%#v", orders)
 	})
 

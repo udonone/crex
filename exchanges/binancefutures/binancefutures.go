@@ -3,6 +3,8 @@ package binancefutures
 import (
 	"context"
 	"fmt"
+	"github.com/chuckpreslar/emission"
+	"github.com/gorilla/websocket"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -17,6 +19,7 @@ import (
 type BinanceFutures struct {
 	client *futures.Client
 	symbol string
+	ws *BinanceFuturesWebSocket
 }
 
 func (b *BinanceFutures) GetName() (name string) {
@@ -44,6 +47,10 @@ func (b *BinanceFutures) SetProxy(proxyURL string) error {
 
 	//adding the Transport object to the http Client
 	b.client.HTTPClient.Transport = transport
+	websocket.DefaultDialer= &websocket.Dialer{
+		Proxy:            http.ProxyURL(proxyURL_),
+		HandshakeTimeout: 45 * time.Second,
+	}
 	return nil
 }
 
@@ -508,5 +515,10 @@ func NewBinanceFutures(params *Parameters) *BinanceFutures {
 	if params.ProxyURL != "" {
 		b.SetProxy(params.ProxyURL)
 	}
+
+	b.ws = &BinanceFuturesWebSocket{
+		emitter: emission.NewEmitter(),
+	}
+
 	return b
 }
