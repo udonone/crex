@@ -19,7 +19,7 @@ import (
 type BinanceFutures struct {
 	client *futures.Client
 	symbol string
-	ws *BinanceFuturesWebSocket
+	ws     *BinanceFuturesWebSocket
 }
 
 func (b *BinanceFutures) GetName() (name string) {
@@ -47,7 +47,7 @@ func (b *BinanceFutures) SetProxy(proxyURL string) error {
 
 	//adding the Transport object to the http Client
 	b.client.HTTPClient.Transport = transport
-	websocket.DefaultDialer= &websocket.Dialer{
+	websocket.DefaultDialer = &websocket.Dialer{
 		Proxy:            http.ProxyURL(proxyURL_),
 		HandshakeTimeout: 45 * time.Second,
 	}
@@ -479,7 +479,7 @@ func (b *BinanceFutures) orderStatus(status futures.OrderStatusType) OrderStatus
 }
 
 func (b *BinanceFutures) SubscribeTrades(market Market, callback func(trades []*Trade)) error {
-	return ErrNotImplemented
+	return b.ws.SubscribeTrades(market, callback)
 }
 
 func (b *BinanceFutures) SubscribeLevel2Snapshots(market Market, callback func(ob *OrderBook)) error {

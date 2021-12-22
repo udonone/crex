@@ -16,7 +16,7 @@ import (
 type BinanceSpot struct {
 	client *binance.Client
 	symbol string
-	ws *BinanceSpotWebSocket
+	ws     *BinanceSpotWebSocket
 }
 
 func (b *BinanceSpot) GetName() (name string) {
@@ -162,7 +162,6 @@ func (b *BinanceSpot) PlaceOrder(symbol string, direction Direction, orderType O
 		Symbol(symbol).
 		Quantity(fmt.Sprint(size))
 
-
 	var side binance.SideType
 	if direction == Buy {
 		side = binance.SideTypeBuy
@@ -283,8 +282,6 @@ func (b *BinanceSpot) convertOrder2(order *binance.CancelOrderResponse) (result 
 	return
 }
 
-
-
 func (b *BinanceSpot) convertOrder(order *binance.CreateOrderResponse) (result *Order) {
 	result = &Order{}
 	result.ID = fmt.Sprint(order.OrderID)
@@ -294,7 +291,7 @@ func (b *BinanceSpot) convertOrder(order *binance.CreateOrderResponse) (result *
 	result.Amount = utils.ParseFloat64(order.OrigQuantity)
 	result.Direction = b.convertDirection(order.Side)
 	result.Type = b.convertOrderType(order.Type)
-	result.AvgPrice = utils.ParseFloat64(order.CummulativeQuoteQuantity)/utils.ParseFloat64(order.ExecutedQuantity)
+	result.AvgPrice = utils.ParseFloat64(order.CummulativeQuoteQuantity) / utils.ParseFloat64(order.ExecutedQuantity)
 	result.FilledAmount = utils.ParseFloat64(order.ExecutedQuantity)
 	result.Time = time.Unix(order.TransactTime/int64(1e3), 0)
 
@@ -312,7 +309,7 @@ func (b *BinanceSpot) convertOrder1(order *binance.Order) (result *Order) {
 	result.Amount = utils.ParseFloat64(order.OrigQuantity)
 	result.Direction = b.convertDirection(order.Side)
 	result.Type = b.convertOrderType(order.Type)
-	result.AvgPrice = utils.ParseFloat64(order.CummulativeQuoteQuantity)/utils.ParseFloat64(order.ExecutedQuantity)
+	result.AvgPrice = utils.ParseFloat64(order.CummulativeQuoteQuantity) / utils.ParseFloat64(order.ExecutedQuantity)
 	result.FilledAmount = utils.ParseFloat64(order.ExecutedQuantity)
 
 	result.Status = b.orderStatus(order.Status)
@@ -400,7 +397,7 @@ func (b *BinanceSpot) SetProxy(proxyURL string) error {
 
 	//adding the Transport object to the http Client
 	b.client.HTTPClient.Transport = transport
-	websocket.DefaultDialer= &websocket.Dialer{
+	websocket.DefaultDialer = &websocket.Dialer{
 		Proxy:            http.ProxyURL(proxyURL_),
 		HandshakeTimeout: 45 * time.Second,
 	}
@@ -408,7 +405,7 @@ func (b *BinanceSpot) SetProxy(proxyURL string) error {
 }
 
 func (b *BinanceSpot) SubscribeTrades(market Market, callback func(trades []*Trade)) error {
-	return ErrNotImplemented
+	return b.ws.SubscribeTrades(market, callback)
 }
 
 func (b *BinanceSpot) SubscribeLevel2Snapshots(market Market, callback func(ob *OrderBook)) error {
@@ -433,7 +430,7 @@ func NewBinanceSpot(params *Parameters) *BinanceSpot {
 	b := &BinanceSpot{
 		client: client,
 	}
-	if params.ProxyURL != ""{
+	if params.ProxyURL != "" {
 		b.SetProxy(params.ProxyURL)
 	}
 
