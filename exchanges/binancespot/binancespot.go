@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/adshao/go-binance/v2"
+	"github.com/chuckpreslar/emission"
 	. "github.com/coinrust/crex"
 	"github.com/coinrust/crex/utils"
 	"github.com/gorilla/websocket"
@@ -432,6 +433,10 @@ func NewBinanceSpot(params *Parameters) *BinanceSpot {
 	}
 	if params.ProxyURL != "" {
 		b.SetProxy(params.ProxyURL)
+	}
+
+	b.ws = &BinanceSpotWebSocket{
+		emitter: emission.NewEmitter(),
 	}
 
 	return b
